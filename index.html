@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Coordinaciones | Universidad Central</title>
+    <style>
+        :root {
+            --primary: #0d3b66;
+            --primary-dark: #07223d;
+            --primary-light: #eef4f8;
+            --accent: #f4a261;
+            --accent-hover: #e76f51;
+            --success: #2a9d8f;
+            --danger: #e63946;
+            --text-main: #2b2d42;
+            --text-muted: #6c757d;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --radius: 8px;
+            --font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* --- Barra de Avisos --- */
+        .top-alert {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ffeeba;
+        }
+
+        .top-alert a {
+            color: #533f03;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .close-alert {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: #856404;
+        }
+
+        /* --- Header y Navbar --- */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .logo-icon {
+            background-color: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn-ticket {
+            background-color: var(--primary);
+            color: #fff !important;
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            transition: background 0.2s;
+        }
+
+        .btn-ticket:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* --- Hero Section & Buscador --- */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 48px 20px 60px;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .breadcrumbs {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+        }
+
+        .breadcrumbs a {
+            color: #e2e8f0;
+            text-decoration: none;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #e2e8f0;
+            margin-bottom: 30px;
+        }
+
+        /* Buscador integrado */
+        .search-box {
+            position: relative;
+            background: white;
+            border-radius: 50px;
+            padding: 6px 8px 6px 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            margin-bottom: 24px;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 1rem;
+            color: var(--text-main);
+            font-family: inherit;
+        }
+
+        .search-box button {
+            background-color: var(--accent);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+
+        .search-box button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Filtros rápidos */
+        .filter-tags {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: white;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* --- Contenedor Principal / Directorio --- */
+        .main-container {
+            max-width: 1200px;
+            margin: -30px auto 60px;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+
+        .status-badge.open {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        .status-badge.open::before {
+            background-color: var(--success);
+        }
+
+        .status-badge.closed {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        .status-badge.closed::before {
+            background-color: var(--danger);
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--primary-dark);
+        }
+
+        .card-meta {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-footer {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-link {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .btn-view-more {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-view-more:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* --- Modal Vista Detallada --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 850px;
+            max-height: 90vh;
+            border-radius: 12px;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .modal-header {
+            background: var(--primary);
+            color: white;
+            padding: 24px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .modal-header .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Pestañas */
+        .tabs {
+            display: flex;
+            background: #f1f5f9;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 96px;
+            z-index: 9;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 14px;
+            text-align: center;
+            border: none;
+            background: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background: white;
+        }
+
+        .tab-content {
+            padding: 24px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Contenido de Ficha */
+        .profile-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: var(--bg-body);
+            padding: 16px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #475569;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+
+        .schedule-table th, .schedule-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px 14px;
+            text-align: left;
+        }
+
+        .schedule-table th {
+            background-color: var(--bg-body);
+        }
+
+        /* Acordeones */
+        .accordion-item {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 14px 18px;
+            background: white;
+            border: none;
+            text-align: left;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .accordion-body {
+            padding: 16px 18px;
+            background: var(--bg-body);
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .accordion-item.open .accordion-body {
+            display: block;
+        }
+
+        /* Lista de Descargas */
+        .download-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            transition: background 0.2s;
+        }
+
+        .download-item:hover {
+            background-color: var(--primary-light);
+        }
+
+        .btn-download {
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 14px;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: #94a3b8;
+            padding: 40px 20px 20px;
+            font-size: 0.9rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 14px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-col a {
+            color: #cbd5e1;
+            text-decoration: none;
+        }
+
+        .footer-col a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #1e293b;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Aviso Superior Global -->
+    <aside class="top-alert" id="generalAlert">
+        <span>📢 <strong>Aviso Importante:</strong> Recepción de recaudos para Becas Socioeconómicas habilitada hasta el 30 de Noviembre. <a href="#directorio">Ver detalles</a></span>
+        <button class="close-alert" onclick="document.getElementById('generalAlert').style.display='none'">✕</button>
+    </aside>
+
+    <!-- Navegación Principal -->
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <div class="logo-icon">U</div>
+                <span>Universidad Central</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#directorio">Directorio</a></li>
+                <li><a href="#">Calendario Académico</a></li>
+                <li><a href="#" class="btn-ticket" onclick="alert('Redirigiendo al sistema de Tickets...')">Mesa de Ayuda</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section con Buscador en Tiempo Real -->
+    <section class="hero">
+        <div class="hero-container">
+            <nav class="breadcrumbs">
+                <a href="#">Inicio</a> &gt; <span>Coordinaciones Académicas y Administrativas</span>
+            </nav>
+            <h1>¿Qué coordinación o trámite buscas?</h1>
+            <p>Encuentra horarios de atención, canales directos de contacto, procedimientos y formularios oficiales de descarga.</p>
+
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Escribe el nombre de la coordinación, trámite o responsable..." onkeyup="filterCards()">
+                <button type="button">Buscar</button>
+            </div>
+
+            <!-- Filtros de Categoría -->
+            <div class="filter-tags">
+                <button class="filter-btn active" onclick="filterCategory('todas', this)">Todas</button>
+                <button class="filter-btn" onclick="filterCategory('academica', this)">Académicas</button>
+                <button class="filter-btn" onclick="filterCategory('administrativa', this)">Administrativas</button>
+                <button class="filter-btn" onclick="filterCategory('servicios', this)">Servicios Estudiantiles</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Directorio de Tarjetas -->
+    <main class="main-container" id="directorio">
+        <div class="section-header">
+            <h2 style="font-size: 1.3rem; color: var(--primary);">Directorio de Coordinaciones</h2>
+            <span id="resultsCount" style="color: var(--text-muted); font-size: 0.9rem;">Mostrando 4 coordinaciones</span>
+        </div>
+
+        <div class="cards-grid" id="cardsGrid">
+            
+            <!-- Tarjeta 1: Becas y Beneficios -->
+            <article class="card" data-category="servicios" data-name="beneficios estudiantiles becas socioeconomica comedor">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">🎓</div>
+                        <span class="status-badge open">En horario de atención</span>
+                    </div>
+                    <h3>Gestión de Beneficios Estudiantiles</h3>
+                    <div class="card-meta">
+                        <span>📍 Edificio Central, P.B., Oficina 04</span>
+                        <span>🕒 Lun a Jue: 8:00 AM - 12:00 PM</span>
+                        <span>👤 Prof. Carlos Mendoza</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Asignación y renovación de becas, servicio de comedor y cobertura estudiantil.</p>
+                </div>
+                <div class="card-footer">
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">3 formularios disp.</span>
+                    <button class="btn-view-more" onclick="openModal('modalBecas')">Ver Ficha Completa →</button>
+                </div>
+            </article>
+
+            <!-- Tarjeta 2: Informática -->
+            <article class="card" data-category="academica" data-name="informatica sistemas computacion software">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">💻</div>
+                        <span class="status-badge open">En horario de atención</span>
+                    </div>
+                    <h3>Coordinación de Informática</h3>
+                    <div class="card-meta">
+                        <span>📍 Módulo de Ingeniería, Piso 2, Ofic. 210</span>
+                        <span>🕒 Lun a Vie: 8:30 AM - 3:00 PM</span>
+                        <span>👤 Ing. Helena Rivas</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Consultas curriculares, cartas de postulación para pasantías, convalidación de asignaturas.</p>
+                </div>
+                <div class="card-footer">
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">2 formularios disp.</span>
+                    <button class="btn-view-more" onclick="alert('Ficha en preparación. Por favor consulta la Coordinación de Beneficios como demostración.')">Ver Ficha Completa →</button>
+                </div>
+            </article>
+
+            <!-- Tarjeta 3: Control de Estudios -->
+            <article class="card" data-category="administrativa" data-name="control de estudios notas inscripcion constancias grado record">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">📋</div>
+                        <span class="status-badge closed">Cerrado por hoy</span>
+                    </div>
+                    <h3>Control de Estudios y Archivo</h3>
+                    <div class="card-meta">
+                        <span>📍 Edificio Administrativo, Taquillas 1 a la 4</span>
+                        <span>🕒 Mar y Jue: 8:00 AM - 1:00 PM</span>
+                        <span>👤 Lic. Mario Ortega</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Emisión de notas certificadas, constancias de estudio, inscripción académica y grados.</p>
+                </div>
+                <div class="card-footer">
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">5 formularios disp.</span>
+                    <button class="btn-view-more" onclick="alert('Ficha en preparación. Selecciona Beneficios Estudiantiles para ver el detalle interactivo.')">Ver Ficha Completa →</button>
+                </div>
+            </article>
+
+            <!-- Tarjeta 4: Pasantías y Prácticas -->
+            <article class="card" data-category="academica" data-name="pasantias practicas profesionales convenios empresas">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">🏢</div>
+                        <span class="status-badge open">En horario de atención</span>
+                    </div>
+                    <h3>Pasantías y Prácticas Profesionales</h3>
+                    <div class="card-meta">
+                        <span>📍 Edificio Biblioteca, Nivel 1</span>
+                        <span>🕒 Lun a Jue: 9:00 AM - 1:00 PM</span>
+                        <span>👤 Dra. Viviana Salazar</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Cartas de postulación institucional, convenios empresariales y seguimiento de tutorías.</p>
+                </div>
+                <div class="card-footer">
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">4 formularios disp.</span>
+                    <button class="btn-view-more" onclick="alert('Ficha en preparación. Selecciona Beneficios Estudiantiles para ver el ejemplo completo.')">Ver Ficha Completa →</button>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- Modal Interactivo: Vista Detallada de la Coordinación -->
+    <div class="modal-overlay" id="modalBecas">
+        <div class="modal-content">
+            <header class="modal-header">
+                <button class="close-modal" onclick="closeModal('modalBecas')">✕</button>
+                <span class="status-badge open" style="margin-bottom: 8px;">En horario de atención presencial</span>
+                <h2>Coordinación de Gestión de Beneficios Estudiantiles</h2>
+                <p style="font-size: 0.9rem; opacity: 0.9;">Adscripción: Dirección de Desarrollo y Bienestar Estudiantil</p>
+            </header>
+
+            <!-- Pestañas de Navegación Interna -->
+            <nav class="tabs">
+                <button class="tab-btn active" onclick="switchTab(event, 'tabInfo')">Información & Contacto</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tabTramites')">Trámites y Requisitos</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tabDescargas')">Descargas Oficiales</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tabFaq')">Preguntas Frecuentes</button>
+            </nav>
+
+            <!-- Contenido Pestaña 1: Información & Contacto -->
+            <div id="tabInfo" class="tab-content active">
+                <div class="profile-card">
+                    <div class="profile-avatar">CM</div>
+                    <div>
+                        <h4 style="color: var(--primary);">Prof. Carlos Mendoza</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Coordinador General de Becas</p>
+                        <p style="font-size: 0.85rem;">✉️ <strong>Correo:</strong> coordinacion.becas@universidad.edu</p>
+                        <p style="font-size: 0.85rem;">📞 <strong>Extensión:</strong> +58 (212) 555-0192 Ext. 402</p>
+                    </div>
+                </div>
+
+                <h4 style="margin-bottom: 8px;">Ubicación y Horarios</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 12px;"><strong>Ubicación:</strong> Edificio Central, Planta Baja, Oficina 04 (Junto a Bienestar).</p>
+                
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Día</th>
+                            <th>Bloque Estudiantes</th>
+                            <th>Bloque Docente / Administrativo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lunes a Jueves</td>
+                            <td>8:00 AM - 12:00 PM</td>
+                            <td>1:30 PM - 3:30 PM</td>
+                        </tr>
+                        <tr>
+                            <td>Viernes</td>
+                            <td>Solo citas previas / Trabajo interno</td>
+                            <td>No hay atención presencial</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Contenido Pestaña 2: Trámites y Requisitos -->
+            <div id="tabTramites" class="tab-content">
+                <h3 style="margin-bottom: 16px;">Trámites Gestionados</h3>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>1. Solicitud de Beca Socioeconómica (Primera vez)</span>
+                        <span>▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <p><strong>Requisitos obligatorios:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li>Copia legible del carnet estudiantil vigente o cédula de identidad.</li>
+                            <li>Récord académico con promedio mínimo de 14 puntos sin materias reprobadas en el último período.</li>
+                            <li>Formulario oficial de Solicitud (Formulario B-01).</li>
+                            <li>Constancia de ingresos del sostén económico del hogar.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>2. Renovación Semestral de Beneficio</span>
+                        <span>▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <p>Para renovar el beneficio, el estudiante debe consignar durante las dos primeras semanas de cada semestre:</p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li>Planilla de Renovación (Formulario B-02).</li>
+                            <li>Comprobante de inscripción del nuevo semestre en curso.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido Pestaña 3: Descargas Oficiales -->
+            <div id="tabDescargas" class="tab-content">
+                <h3 style="margin-bottom: 12px;">Formatos y Documentos Oficiales</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">Descarga los formularios actualizados. Todos los documentos deben presentarse en formato impreso y firmados con bolígrafo de tinta negra.</p>
+
+                <div class="download-item">
+                    <div>
+                        <strong>Formulario B-01: Solicitud de Beca Inicial</strong>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">PDF • 240 KB • Actualizado: Oct 2026</p>
+                    </div>
+                    <a href="#" class="btn-download" onclick="alert('Descargando archivo modelo Formulario_B01.pdf')">Descargar PDF</a>
+                </div>
+
+                <div class="download-item">
+                    <div>
+                        <strong>Formulario B-02: Ficha de Renovación de Beneficio</strong>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">PDF • 180 KB • Actualizado: Sep 2026</p>
+                    </div>
+                    <a href="#" class="btn-download" onclick="alert('Descargando archivo modelo Formulario_B02.pdf')">Descargar PDF</a>
+                </div>
+
+                <div class="download-item">
+                    <div>
+                        <strong>Baremo y Reglamento General de Becas</strong>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">PDF • 1.2 MB • Vigente</p>
+                    </div>
+                    <a href="#" class="btn-download" onclick="alert('Descargando Reglamento_Becas.pdf')">Descargar PDF</a>
+                </div>
+            </div>
+
+            <!-- Contenido Pestaña 4: FAQ -->
+            <div id="tabFaq" class="tab-content">
+                <h3 style="margin-bottom: 16px;">Preguntas Frecuentes</h3>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>¿Puedo solicitar beca si tengo una materia aplazada?</span>
+                        <span>▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        No. El reglamento exige ser estudiante regular sin asignaturas reprobadas durante el período académico inmediatamente anterior.
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>¿Qué banco utiliza la universidad para el depósito de la asignación?</span>
+                        <span>▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        Las becas son depositadas exclusivamente en cuentas corrientes o de ahorros a nombre titular del estudiante en el Banco Universitario Institucional.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de Página Institucional -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>Universidad Central</h4>
+                <p>Campus Universitario, Av. Principal.<br>Coordinación General de Sistemas e Información.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces de Interés</h4>
+                <ul>
+                    <li><a href="#">Portal del Estudiante</a></li>
+                    <li><a href="#">Bolsa de Empleo & Pasantías</a></li>
+                    <li><a href="#">Biblioteca Digital</a></li>
+                    <li><a href="#">Reglamentos Institucionales</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Soporte y Contacto</h4>
+                <ul>
+                    <li><a href="#">Mesa Técnica de Ayuda</a></li>
+                    <li><a href="#">Reportar Incidencia</a></li>
+                    <li><a href="#">Mapa Interactivo del Campus</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Universidad Central — Dirección de Tecnologías y Comunicaciones. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts de Funcionalidad e Interacción -->
+    <script>
+        // Filtro en tiempo real por texto (Buscador)
+        function filterCards() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('#cardsGrid .card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const searchData = card.getAttribute('data-name').toLowerCase();
+                const cardTitle = card.querySelector('h3').innerText.toLowerCase();
+
+                if (searchData.includes(input) || cardTitle.includes(input)) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('resultsCount').innerText = `Mostrando ${visibleCount} coordinaciones`;
+        }
+
+        // Filtro por categoría mediante etiquetas
+        function filterCategory(category, buttonElement) {
+            // Actualizar clase activa en botones
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            buttonElement.classList.add('active');
+
+            const cards = document.querySelectorAll('#cardsGrid .card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const cardCat = card.getAttribute('data-category');
+                if (category === 'todas' || cardCat === category) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('resultsCount').innerText = `Mostrando ${visibleCount} coordinaciones`;
+        }
+
+        // Control de Modal de Detalle
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Cierre de modal al hacer clic fuera del contenido
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal-overlay');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        };
+
+        // Navegación de Pestañas dentro del Modal
+        function switchTab(evt, tabId) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => tab.classList.remove('active'));
+
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // Despliegue de Acordeones (Trámites y FAQs)
+        function toggleAccordion(button) {
+            const item = button.parentElement;
+            item.classList.toggle('open');
+            const arrow = button.querySelector('span:last-child');
+            if (item.classList.contains('open')) {
+                arrow.innerText = '▲';
+            } else {
+                arrow.innerText = '▼';
+            }
+        }
+    </script>
+</body>
+</html>
